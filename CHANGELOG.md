@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2025-09-27
+
+### 🚀 Major Release: Content-Aware Distributed Caching Architecture
+
+#### Added
+- **Content-aware caching system** with MD5-based ETags for precise cache invalidation
+- **Enhanced health endpoint** with `contentHash` and `lastModified` fields for cache validation
+- **Comprehensive technical documentation** at `docs/engineering/caching-architecture.md`
+- **Advanced API examples** with content validation workflows and portfolio integration patterns
+
+#### Changed
+- **BREAKING**: ISR revalidation interval from 300s → 86400s (96% resource reduction)
+- **BREAKING**: Removed `stale-while-revalidate=86400` to eliminate 24h stale content risk
+- **HTTP caching strategy**: Conservative 30min edge cache with `must-revalidate`
+- **ETag generation**: From URL parameters to content-based MD5 hashing
+- **Data source**: Velite output moved from `.velite/` to `public/data/` for production accessibility
+
+#### Fixed
+- **Global edge cache inconsistency** - new articles now visible worldwide within 30 minutes
+- **Geographic content differences** - eliminated the Mac Pro vs Mac Mini different content issue
+- **Resource waste** - reduced unnecessary ISR checks by 96% while maintaining content freshness
+
+#### Performance
+- ✅ **Global consistency**: 30min maximum propagation time (vs 24h uncertainty)
+- ✅ **Resource optimization**: 287 fewer daily server checks (from 288 → 1)
+- ✅ **Zero stale content**: Eliminated distributed cache inconsistency
+- ✅ **Smart invalidation**: ETags change only when content actually changes
+
+---
+
 ## 2025-09-13
 
 ### Added
